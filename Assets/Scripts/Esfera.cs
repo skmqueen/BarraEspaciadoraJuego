@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using UnityEngine;
+
 public class Esfera : MonoBehaviour
 {
     public GameObject spherePrefab; // Prefab de la esfera
@@ -7,12 +9,6 @@ public class Esfera : MonoBehaviour
 
     public void SpawnSphere()
     {
-        if (spawnPlane == null || spherePrefab == null)
-        {
-            Debug.LogError("Debes asignar el prefab y el plano.");
-            return;
-        }
-
         // Obtener tamaño del plano
         Vector3 planeScale = spawnPlane.transform.localScale;
         Vector3 spawnAreaSize = new Vector3(10 * planeScale.x, 0, 10 * planeScale.z);
@@ -28,6 +24,13 @@ public class Esfera : MonoBehaviour
         randomPosition += spawnPlane.transform.position;
 
         // Crear la esfera
-        Instantiate(spherePrefab, randomPosition, Quaternion.identity);
+        GameObject nuevaEsfera = Instantiate(spherePrefab, randomPosition, Quaternion.identity);
+
+        // CAMBIAR COLOR DE LA ESFERA
+        Renderer rend = nuevaEsfera.GetComponent<Renderer>();
+        if (rend != null)
+        {
+            rend.material.color = Random.ColorHSV(); // Establecemos color radom para esfera random
+        }
     }
 }
